@@ -19,12 +19,12 @@ end
 
 M.update_path = function(path)
     if (path == nil) then
-        path = utils.parse_path_helper(vim.fn.expand('%:p'))
+        path = vim.fn.expand('%:p');
     end
     if (save == nil) then
         return
     end
-    path = utils.parse_path(path)
+    path = utils.parse_path_helper(vim.fn.expand('%:p'))
     state.path = path
     state.opened = {}
     state.closed = {}
@@ -186,7 +186,7 @@ M.on_todos_md_updated = function()
         if _file then
             _file:close();
             local _filename = filename ..
-                utils.get_next_id(M.todosDeletedPath, filename) .. ".md";
+            utils.get_next_id(M.todosDeletedPath, filename) .. ".md";
             newLocation = utils.parse_path_helper(M.todosDeletedPath .. "/" .. _filename):gsub("%./", "");
         end
         M.update_dont_open(path, nil, true, newLocation);
