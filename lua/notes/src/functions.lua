@@ -1,6 +1,6 @@
 local M = {}
 
-local oil = require("notes.src.oil");
+local oil = require("oil");
 local constants = require("notes.constants");
 local utils = require("notes.src.utils");
 local _state = require("notes.src.state");
