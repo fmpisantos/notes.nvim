@@ -17,6 +17,20 @@ M.open = function(path)
     vim.cmd("normal! G$");
 end
 
+M.update_path = function(path)
+    if (path == nil) then
+        path = vim.fn.expand('%:p')
+    end
+    if (save == nil) then
+        return
+    end
+    path = M.parse_path(path)
+    state.path = path
+    state.opened = {}
+    state.closed = {}
+    save(state)
+end
+
 M.update_todos_md = function()
     local todo_file = io.open(M.todosFilePath, "w")
     if todo_file then

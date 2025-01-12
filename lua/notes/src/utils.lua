@@ -210,20 +210,6 @@ M.get_todo_info = function()
     end
 end
 
-M.update_path = function(path)
-    if (path == nil) then
-        path = vim.fn.expand('%:p')
-    end
-    if (save == nil) then
-        return
-    end
-    path = M.parse_path(path)
-    state.path = path
-    state.opened = {}
-    state.closed = {}
-    save(state)
-end
-
 M.create_dir = function(dir_path)
     dir_path = M.parse_path(dir_path)
     if vim.loop.fs_stat(dir_path) == nil then
