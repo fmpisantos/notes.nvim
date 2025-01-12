@@ -134,6 +134,25 @@ M.on_file_delete = function(filepath)
     M.update_todos_md();
 end
 
+M.delete_todo = function(filepath)
+    local filename = vim.fn.fnamemodify(filepath, ":t:r");
+    local newLocation = constants.todosDeletedPath .. "/" .. filename .. ".md";
+    local _file = io.open(newLocation, "r");
+    if _file then
+        _file:close();
+        local newFileName = filename .. ".1"
+        newLocation = constants.todosDeletePath .. "/" .. newFileName .. ".md";
+        _file = io.open(newLocation, "r");
+        if _file then
+            _file:close();
+            newFileName = filename .. utils.get_next_id(constants.todosDeletedPath, filename) .. ".md";
+            newLocation = constants.todosDeletedPath .. "/" .. newFileName;
+        end
+        newLocation = utils.parse_path_helper(newLocation):gsub("%./", "");
+    end
+    M.update_dont_open(filepath, nil, true, newLocation);
+end
+
 M.on_todos_md_updated = function()
     local file = io.open(constants.todosFilePath, "r");
     if not file then
@@ -190,16 +209,7 @@ M.on_todos_md_updated = function()
             M.get_location_from_type(title.type) .. "/" .. vim.fn.fnamemodify(path, ":t"):gsub("%./", ""));
     end
     for path, _ in pairs(to_remove) do
-        local filename = vim.fn.fnamemodify(path, ":t:r");
-        local newLocation = constants.todosDeletedPath .. "/" .. filename .. ".md";
-        local _file = io.open(newLocation, "r");
-        if _file then
-            _file:close();
-            local _filename = filename ..
-                utils.get_next_id(constants.todosDeletedPath, filename) .. ".md";
-            newLocation = utils.parse_path_helper(constants.todosDeletedPath .. "/" .. _filename):gsub("%./", "");
-        end
-        M.update_dont_open(path, nil, true, newLocation);
+        M.delete_todo(path);
     end
     M.update_todos_md();
 end
@@ -222,7 +232,9 @@ M.set_Path = function()
     state.path = nil
     save(state)
     M.update_path();
-    constants.update_paths();
+    if (constants.update_paths()) then
+        require("notes.src.autocmds");
+    end
     M.refresh();
 end
 

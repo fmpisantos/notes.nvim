@@ -149,12 +149,17 @@ vim.api.nvim_create_autocmd('BufDelete', {
 });
 
 oilAutoCMD.setup(
-    function(path)
-        functions.on_file_delete(path)
-    end,
-    function(src, dest)
-        functions.update_dont_open(src, functions.type_of_file_location(dest), true, dest)
-        functions.update_todos_md()
-    end,
-    { constants.notes_inc, constants.todos_inc }
+    {
+        func = function(path)
+            functions.on_file_delete(path)
+        end,
+        pattern = { constants.todos_inc }
+    },
+    {
+        func = function(src, dest)
+            functions.update_dont_open(src, functions.type_of_file_location(dest), true, dest)
+            functions.update_todos_md()
+        end,
+        pattern = { constants.notes_inc, constants.todos_inc }
+    }
 );
