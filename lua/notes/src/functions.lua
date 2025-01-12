@@ -248,6 +248,7 @@ M.create_notes_directory = function()
     oil.open(projectName);
     vim.cmd(":edit!");
     M.update_path(notes_path);
+    constants.update_paths();
 end
 
 return M;
