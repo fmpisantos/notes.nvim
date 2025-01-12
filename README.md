@@ -104,7 +104,7 @@ the `update_split_content` function is triggered to update the content of a spli
 
 ## Default keymaps
 The following keymaps are setup by default when in the todos.md file:
-   - `gf` and `gd` are mapped to the `goto_file_in_todos_md` function to open the linked file from the todo.
+   - `Enter`, `gf` and `gd` are mapped to the `goto_file_in_todos_md` function to open the linked file from the todo.
    - `<Tab>` is mapped to `split_current_file` to split the window and open the todo file.
    - `<leader>n` is mapped to `add_todo` to add a new todo from within the todos file.
 
