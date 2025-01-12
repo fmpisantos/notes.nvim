@@ -82,6 +82,11 @@ M.update = function(_oldPath, newType, dont_update_todos_md, newPath, dontOpenBu
     end
     local oldType = utils.type_of_file_location(_oldPath);
 
+    vim.print("Old type: " .. oldType);
+    vim.print("New type: " .. newType);
+    vim.print("Old path: " .. _oldPath);
+    vim.print("New path: " .. newPath);
+
     if not newType then
         local todo, done = utils.get_todo_info();
         if todo then
@@ -96,12 +101,7 @@ M.update = function(_oldPath, newType, dont_update_todos_md, newPath, dontOpenBu
     else
         utils.update_first_line(_oldPath, newType);
     end
-    vim.print(newPath)
-    vim.print(newType)
-    vim.print(utils.get_location_from_type(newType))
-    vim.print(vim.fn.fnamemodify(_oldPath, "%:t"))
     newPath = newPath or utils.get_location_from_type(newType) .. "/" .. vim.fn.fnamemodify(_oldPath, "%:t");
-    vim.print(newPath)
 
     local title = utils.get_title(_oldPath) or newPath;
     if newType ~= oldType then
