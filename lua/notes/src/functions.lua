@@ -22,6 +22,7 @@ M.get_location_from_type = function(type)
 end
 
 M.open = function(path)
+    vim.print("Opening: " .. path);
     utils.open_floating_window();
     vim.cmd("edit " .. path);
     vim.cmd("normal! G$");

@@ -1,5 +1,3 @@
-local M = {};
-
 local constants = require("notes.constants");
 local functions = require("notes.src.functions");
 local tags = require("notes.constants").tags;
