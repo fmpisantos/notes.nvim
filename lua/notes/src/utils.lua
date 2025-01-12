@@ -2,7 +2,6 @@ local M = {};
 
 local oil = require("oil");
 local oilAutoCMD = require("oilAutoCmd.init");
-local tags = require("notes.constants").tags;
 local _state = require("notes.src.state");
 local state, save = _state.state, _state.save;
 
@@ -110,7 +109,7 @@ end
 M.move_file = function(source, destination, dontOpenBuffer)
     source = M.make_full_path(source)
     if M.is_directory(destination) then
-        destination = destination .. "/" .. vim.fn.expand(source, ":t")
+        destination = destination .. "/" .. vim.fn.fnamemodify(source, ":t")
     end
     destination = M.make_full_path(destination)
     local success, err = os.rename(source, destination)
@@ -126,6 +125,7 @@ M.move_file = function(source, destination, dontOpenBuffer)
 end
 
 M.update_first_line = function(newPath, newType)
+    local tags = require("notes.constants").tags;
     if newPath == nil or newPath == "" then
         return;
     end
@@ -192,6 +192,7 @@ M.is_in_path_dir = function(base_path)
 end
 
 M.get_todo_info = function()
+    local tags = require("notes.constants").tags;
     local file = io.open(vim.fn.expand('%:p'), "r");
     if not file then
         return false, false
@@ -327,7 +328,7 @@ M.CreateFloatingWindow = function(opts)
     local ui = vim.api.nvim_list_uis()[1]
     if not ui then
         vim.notify("Unable to get UI dimensions!", vim.log.levels.ERROR)
-        return
+        return {}
     end
 
     local default_width = math.floor(ui.width * 0.8)
