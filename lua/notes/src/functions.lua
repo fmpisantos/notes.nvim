@@ -83,9 +83,9 @@ M.update = function(_oldPath, newType, dont_update_todos_md, newPath, dontOpenBu
     local oldType = utils.type_of_file_location(_oldPath);
 
     vim.print("Old type: " .. oldType);
-    vim.print("New type: " .. newType);
-    vim.print("Old path: " .. _oldPath);
-    vim.print("New path: " .. newPath);
+    vim.print("New type: " .. tostring(newType));
+    vim.print("Old path: " .. tostring(_oldPath));
+    vim.print("New path: " .. tostring(newPath));
 
     if not newType then
         local todo, done = utils.get_todo_info();
