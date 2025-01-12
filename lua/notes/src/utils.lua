@@ -1,9 +1,9 @@
 local M = {};
 
 local oil = require("oil");
-local oilAutoCMD = require("awman.myPlugins.oilAutoCmd.init");
-local tags = require("awman.myPlugins.notes.constants").tags;
-local _state = require("awman.myPlugins.notes.src.state");
+local oilAutoCMD = require("oilAutoCmd.init");
+local tags = require("notes.constants").tags;
+local _state = require("notes.src.state");
 local state, save = _state.state, _state.save;
 
 if not state then

@@ -1,9 +1,9 @@
 local M = {}
 
-local pre = require("awman.myPlugins.notes.constants").pre;
-local utils = require("awman.myPlugins.notes.src.utils");
-local state = require("awman.myPlugins.notes.src.state").state;
-local functions = require("awman.myPlugins.notes.src.functions");
+local pre = require("notes.constants").pre;
+local utils = require("notes.src.utils");
+local state = require("notes.src.state").state;
+local functions = require("notes.src.functions");
 
 if state == nil then
     return

@@ -1,8 +1,8 @@
 local M = {}
 
-local constants = require("awman.myPlugins.notes.constants");
-local utils = require("awman.myPlugins.notes.src.utils");
-local _state = require("awman.myPlugins.notes.src.state");
+local constants = require("notes.constants");
+local utils = require("notes.src.utils");
+local _state = require("notes.src.state");
 local state, save = _state.state, _state.save;
 
 if not state then

@@ -1,9 +1,9 @@
 local M = {};
 
-local functions = require("awman.myPlugins.notes.src.functions");
-local tags = require("awman.myPlugins.notes.constants").tags;
-local utils = require("awman.myPlugins.notes.src.utils")
-local oilAutoCMD = require("awman.myPlugins.oilAutoCmd.init");
+local functions = require("notes.src.functions");
+local tags = require("notes.constants").tags;
+local utils = require("notes.src.utils")
+local oilAutoCMD = require("oilAutoCmd.init");
 
 local function get_current_line_path()
     local line = vim.fn.getline('.');
