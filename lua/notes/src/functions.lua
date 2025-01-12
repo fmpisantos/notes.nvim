@@ -187,7 +187,7 @@ M.on_todos_md_updated = function()
         if _file then
             _file:close();
             local _filename = filename ..
-            utils.get_next_id(M.todosDeletedPath, filename) .. ".md";
+                utils.get_next_id(M.todosDeletedPath, filename) .. ".md";
             newLocation = utils.parse_path_helper(M.todosDeletedPath .. "/" .. _filename):gsub("%./", "");
         end
         M.update_dont_open(path, nil, true, newLocation);
@@ -213,6 +213,7 @@ M.set_Path = function()
     state.path = nil
     save(state)
     M.update_path();
+    constants.update_paths();
     M.refresh();
 end
 

@@ -4,6 +4,7 @@ local pre = require("notes.constants").pre;
 local utils = require("notes.src.utils");
 local state = require("notes.src.state").state;
 local functions = require("notes.src.functions");
+local constants = require("notes.constants");
 
 if state == nil then
     return
@@ -17,23 +18,17 @@ function M.setup()
         return
     end
 
-    M.notesPath = utils.parse_path_helper(state.path .. "/notes");
-    M.notes_inc = M.notesPath .. "/**";
-    M.todosPath = utils.parse_path_helper(state.path .. "/todos");
-    M.todos_inc = M.todosPath .. "/**";
-    M.todosDonePath = utils.parse_path_helper(state.path .. "/todos/done");
-    M.todosDeletedPath = utils.parse_path_helper(state.path .. "/todos/deleted");
-    M.todosFilePath = utils.parse_path_helper(state.path .. "/todos.md");
+    constants.update_paths();
 
     vim.api.nvim_create_user_command("Notes", function()
-        functions.open(M.notesPath);
+        functions.open(constants.notesPath);
     end, { nargs = 0 })
     vim.api.nvim_create_user_command("Todos", function()
-        functions.open(M.todosPath);
+        functions.open(constants.todosPath);
     end, { nargs = 0 })
     vim.api.nvim_create_user_command("Note", function()
-        local id = functions.get_next_id(M.notesPath, "note");
-        local path = M.notesPath .. "/note" .. id .. ".md";
+        local id = functions.get_next_id(constants.notesPath, "note");
+        local path = constants.notesPath .. "/note" .. id .. ".md";
         functions.open(path);
     end, { nargs = 0 })
     vim.api.nvim_create_user_command("Todo", functions.open_new_todo, { nargs = 0 })
@@ -42,15 +37,15 @@ function M.setup()
     vim.api.nvim_create_user_command("TodosRefresh", functions.refresh, { nargs = 0 })
     vim.api.nvim_create_user_command("NotesRefresh", functions.refresh, { nargs = 0 })
     vim.api.nvim_create_user_command("GotoNotes", function()
-        vim.cmd("e " .. M.notesPath);
+        vim.cmd("e " .. constants.notesPath);
     end, { nargs = 0 })
     vim.api.nvim_create_user_command("GotoTodos", function()
-        vim.cmd("e " .. M.todosFilePath);
+        vim.cmd("e " .. constants.todosFilePath);
     end, { nargs = 0 })
 
 
     vim.api.nvim_create_autocmd('BufWritePre', {
-        pattern = { M.notes_inc, M.todos_inc },
+        pattern = { constants.notes_inc, constants.todos_inc },
         callback = function()
             local current_path = vim.fn.expand('%:p');
             if pre[current_path] then
@@ -61,7 +56,7 @@ function M.setup()
     });
 
     vim.api.nvim_create_autocmd('BufWritePost', {
-        pattern = { M.notes_inc, M.todos_inc },
+        pattern = { constants.notes_inc, constants.todos_inc },
         callback = function()
             local current_path = vim.fn.expand('%:p');
             if pre[current_path] then
@@ -74,15 +69,15 @@ function M.setup()
     });
 
     vim.api.nvim_create_autocmd('BufWritePost', {
-        pattern = { M.todosFilePath },
+        pattern = { constants.todosFilePath },
         callback = function()
             functions.on_todos_md_updated()
-            vim.cmd("e " .. M.todosFilePath);
+            vim.cmd("e " .. constants.todosFilePath);
         end,
     });
 
     vim.api.nvim_create_autocmd('BufDelete', {
-        pattern = { M.notes_inc, M.todos_inc },
+        pattern = { constants.notes_inc, constants.todos_inc },
         callback = function(event)
             local filepath = vim.api.nvim_buf_get_name(event.buf)
             functions.on_file_delete(filepath)
