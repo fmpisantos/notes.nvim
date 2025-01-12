@@ -370,4 +370,52 @@ M.get_next_id = function(path, prefix)
     return max + 1
 end
 
+M.CreateFloatingWindow = function(opts)
+    local ui = vim.api.nvim_list_uis()[1]
+    if not ui then
+        vim.notify("Unable to get UI dimensions!", vim.log.levels.ERROR)
+        return
+    end
+
+    local default_width = math.floor(ui.width * 0.8)
+    local default_height = math.floor(ui.height * 0.8)
+
+    local width = opts and opts.width or default_width
+    local height = opts and opts.height or default_height
+
+    width = math.min(width, ui.width)
+    height = math.min(height, ui.height)
+
+    local col = opts and opts.col or math.floor((ui.width - width) / 2)
+    local row = opts and opts.row or math.floor((ui.height - height) / 2)
+
+    local buf = nil
+    if opts and opts.buf and vim.api.nvim_buf_is_valid(opts.buf) then
+        buf = opts.buf
+    else
+        local scratch = true
+        if opts and opts.keep then
+            scratch = false
+        end
+        buf = vim.api.nvim_create_buf(false, scratch)
+    end
+
+    local win_opts = {
+        relative = "editor",
+        width = width,
+        height = height,
+        row = row,
+        col = col,
+        border = "rounded",
+    }
+
+    if not (opts and opts.keepStyle) then
+        win_opts.style = "minimal"
+    end
+
+    local win = vim.api.nvim_open_win(buf, true, win_opts)
+
+    return { buf = buf, win = win }
+end
+
 return M;
