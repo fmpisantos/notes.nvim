@@ -1,5 +1,6 @@
 local M = {}
 
+local oil = require("notes.src.oil");
 local constants = require("notes.constants");
 local utils = require("notes.src.utils");
 local _state = require("notes.src.state");
@@ -161,7 +162,8 @@ M.on_todos_md_updated = function()
         end
     end
     for path, title in pairs(to_update) do
-        M.update_dont_open(path, title.type, true, utils.get_location_from_type(title.type) .. "/" .. vim.fn.expand(path, ":t"));
+        M.update_dont_open(path, title.type, true,
+            utils.get_location_from_type(title.type) .. "/" .. vim.fn.expand(path, ":t"));
     end
     for path, _ in pairs(to_remove) do
         local filename = vim.fn.fnamemodify(path, ":t:r");
@@ -199,5 +201,37 @@ M.set_Path = function()
     M.refresh();
 end
 
+M.create_notes_directory = function()
+    local projectName = vim.fn.input("Enter project name: ")
+    if projectName == nil or projectName == "" then
+        return
+    end
+
+    local path = oil.get_current_dir()
+    local notes_path = M.parse_path_helper(path .. "/" .. projectName)
+
+
+    M.create_dir(notes_path)
+
+    M.create_dir(notes_path .. "/notes")
+    M.create_dir(notes_path .. "/todos")
+    M.create_dir(notes_path .. "/todos/done")
+    M.create_dir(notes_path .. "/todos/deleted")
+
+    io.open(M.parse_path(notes_path .. "/notes/.gitkeep"), "w"):close()
+    io.open(M.parse_path(notes_path .. "/todos/.gitkeep"), "w"):close()
+    io.open(M.parse_path(notes_path .. "/todos/done/.gitkeep"), "w"):close()
+
+    local todo_file = io.open(M.parse_path(notes_path .. "/todos.md"), "w")
+    if todo_file then
+        todo_file:write("# TODOS:\n\n## Open:\n\n## Closed:")
+        todo_file:close()
+    end
+
+    vim.cmd(":edit!");
+    oil.open(projectName);
+    vim.cmd(":edit!");
+    M.update_path(notes_path);
+end
 
 return M;

@@ -231,39 +231,6 @@ M.create_dir = function(dir_path)
     end
 end
 
-M.create_notes_directory = function()
-    local projectName = vim.fn.input("Enter project name: ")
-    if projectName == nil or projectName == "" then
-        return
-    end
-
-    local path = oil.get_current_dir()
-    local notes_path = M.parse_path_helper(path .. "/" .. projectName)
-
-
-    M.create_dir(notes_path)
-
-    M.create_dir(notes_path .. "/notes")
-    M.create_dir(notes_path .. "/todos")
-    M.create_dir(notes_path .. "/todos/done")
-    M.create_dir(notes_path .. "/todos/deleted")
-
-    io.open(M.parse_path(notes_path .. "/notes/.gitkeep"), "w"):close()
-    io.open(M.parse_path(notes_path .. "/todos/.gitkeep"), "w"):close()
-    io.open(M.parse_path(notes_path .. "/todos/done/.gitkeep"), "w"):close()
-
-    local todo_file = io.open(M.parse_path(notes_path .. "/todos.md"), "w")
-    if todo_file then
-        todo_file:write("# TODOS:\n\n## Open:\n\n## Closed:")
-        todo_file:close()
-    end
-
-    vim.cmd(":edit!");
-    oil.open(projectName);
-    vim.cmd(":edit!");
-    M.update_path(notes_path);
-end
-
 M.type_of_file_location = function(path)
     path = M.parse_path(path)
     local current_file = vim.fn.expand(path .. ":p")
