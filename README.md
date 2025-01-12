@@ -12,7 +12,9 @@ This configuration provides a set of custom user commands and autocommands for m
 - [Marks](#marks)
 - [Functions Overview](#functions-overview)
 - [Additional Configuration](#additional-configuration)
+- [Bash Integration](#bash-integration)
 - [Preview](#preview)
+
 
 ## Dependencies
 ### Oil.nvim (TODO: Remove this dependency)
@@ -54,21 +56,24 @@ Initializes a new notes directory creating the necessary files and folders.
 Allows you to set a path as the notes directory. This can be useful when working with multiple notes directories or to transfer between devices. 
 
 3. **`:Notes`**  
-Opens the main notes directory.
+Opens the main notes directory in a popup window.
 
 4. **`:Todos`**  
-Opens the main todos directory.
+Opens the main todos directory in a popup window.
 
 5. **`:GotoTodos`**  
-Opens the todos file in the current buffer using `constants.todosFilePath`.
+Opens the todos.md file in the current buffer.
 
-6. **`:Note`**  
+6. **`:GotoNotes`**
+Opens the notes folder in the current buffer.
+
+7. **`:Note`**  
 Creates and opens a new note. The note's filename is based on the next available ID in the notes directory.
 
-7. **`:Todo`**  
+8. **`:Todo`**  
 Opens a new todo file, allowing you to create and track tasks. Prefixing the new file with the [todo mark](#marks).
 
-8. **`:TodosRefresh`**  
+9. **`:TodosRefresh`**  
 Regenerates the todos.md file based on the files locations.
 
 ## Autocommands
@@ -163,6 +168,17 @@ Updates the content in a split window showing a todo file.
 The `oilAutoCMD.setup` function is used to set up additional behavior for files managed by the Oil plugin. Specifically:
 - It handles file deletions, invoking the `on_file_delete` function.
 - It manages file updates, invoking the `update_dont_open` function to update file state after a move operation, and it triggers `update_todos_md` to ensure the todos file is updated correctly.
+
+## Bash Integration
+The `notes` and `todos` commands can be used in the terminal to open the notes and todos directories in Neovim. 
+To enable this functionality, add the following lines to your `.bashrc` or `.bash_profile`:
+
+```bash
+alias notes="nvim -c 'GotoNotes'"
+alias note="nvim -c 'GotoNotes' -c 'Note'"
+alias todo="nvim -c 'GotoTodos' -c 'Todo'"
+alias todos="nvim +'GotoTodos'"
+```
 
 ## Preview
 ![Home folder preview](./assets/home_folder.png)
