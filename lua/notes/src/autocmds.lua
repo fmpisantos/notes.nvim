@@ -157,9 +157,11 @@ oilAutoCMD.setup(
     },
     {
         func = function(src, dest)
-            functions.update_dont_open(src, functions.type_of_file_location(dest), true, dest)
-            functions.update_todos_md()
+            functions.update_file_move(src, utils.type_of_file_location(dest))
         end,
-        pattern = { constants.notes_inc, constants.todos_inc }
+        pattern = { constants.notes_inc, constants.todos_inc },
+        on_end = function()
+            functions.update_todos_md()
+        end
     }
 );

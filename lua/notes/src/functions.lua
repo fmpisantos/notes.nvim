@@ -84,6 +84,18 @@ M.new_file = function(path)
     M.update_todos_md();
 end
 
+M.update_file_move = function(oldPath, newPath)
+    local oldType = utils.type_of_file_location(oldPath);
+    local newType = utils.type_of_file_location(newPath);
+    if oldType == newType then
+        return
+    end
+    utils.update_first_line(newPath, newType);
+    local title = utils.get_title(newPath) or newPath;
+
+    utils.update_state(oldType, newType, oldPath, newPath, title);
+end
+
 M.update = function(_oldPath, newType, dont_update_todos_md, newPath, dontOpenBuffer)
     dont_update_todos_md = dont_update_todos_md or false;
     if not _oldPath then
