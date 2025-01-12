@@ -103,7 +103,6 @@ M.move_file = function(source, destination, dontOpenBuffer)
     destination = M.make_full_path(destination)
     local success, err = os.rename(source, destination)
     if not success then
-        vim.print(source, destination)
         vim.print("Error moving file:", err)
         return
     end

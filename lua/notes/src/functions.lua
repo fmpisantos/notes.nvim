@@ -84,6 +84,18 @@ M.new_file = function(path)
     M.update_todos_md();
 end
 
+M.update_file_move = function(oldPath, newPath)
+    local oldType = utils.type_of_file_location(oldPath);
+    local newType = utils.type_of_file_location(newPath);
+    if oldType == newType then
+        return
+    end
+    utils.update_first_line(newPath, newType);
+    local title = utils.get_title(newPath) or newPath;
+
+    utils.update_state(oldType, newType, oldPath, newPath, title);
+end
+
 M.update = function(_oldPath, newType, dont_update_todos_md, newPath, dontOpenBuffer)
     dont_update_todos_md = dont_update_todos_md or false;
     if not _oldPath then
@@ -132,6 +144,25 @@ M.on_file_delete = function(filepath)
     end
     save(state);
     M.update_todos_md();
+end
+
+M.delete_todo = function(filepath)
+    local filename = vim.fn.fnamemodify(filepath, ":t:r");
+    local newLocation = constants.todosDeletedPath .. "/" .. filename .. ".md";
+    local _file = io.open(newLocation, "r");
+    if _file then
+        _file:close();
+        local newFileName = filename .. ".1"
+        newLocation = constants.todosDeletePath .. "/" .. newFileName .. ".md";
+        _file = io.open(newLocation, "r");
+        if _file then
+            _file:close();
+            newFileName = filename .. utils.get_next_id(constants.todosDeletedPath, filename) .. ".md";
+            newLocation = constants.todosDeletedPath .. "/" .. newFileName;
+        end
+        newLocation = utils.parse_path_helper(newLocation):gsub("%./", "");
+    end
+    M.update_dont_open(filepath, nil, true, newLocation);
 end
 
 M.on_todos_md_updated = function()
@@ -190,16 +221,7 @@ M.on_todos_md_updated = function()
             M.get_location_from_type(title.type) .. "/" .. vim.fn.fnamemodify(path, ":t"):gsub("%./", ""));
     end
     for path, _ in pairs(to_remove) do
-        local filename = vim.fn.fnamemodify(path, ":t:r");
-        local newLocation = constants.todosDeletedPath .. "/" .. filename .. ".md";
-        local _file = io.open(newLocation, "r");
-        if _file then
-            _file:close();
-            local _filename = filename ..
-                utils.get_next_id(constants.todosDeletedPath, filename) .. ".md";
-            newLocation = utils.parse_path_helper(constants.todosDeletedPath .. "/" .. _filename):gsub("%./", "");
-        end
-        M.update_dont_open(path, nil, true, newLocation);
+        M.delete_todo(path);
     end
     M.update_todos_md();
 end
@@ -222,7 +244,9 @@ M.set_Path = function()
     state.path = nil
     save(state)
     M.update_path();
-    constants.update_paths();
+    if (constants.update_paths()) then
+        require("notes.src.autocmds");
+    end
     M.refresh();
 end
 
