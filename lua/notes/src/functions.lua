@@ -19,7 +19,7 @@ end
 
 M.update_path = function(path)
     if (path == nil) then
-        path = vim.fn.expand('%:p')
+        path = utils.parse_path_helper(vim.fn.expand('%:p'))
     end
     if (save == nil) then
         return
