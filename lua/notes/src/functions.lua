@@ -33,7 +33,7 @@ M.update_path = function(path)
 end
 
 M.update_todos_md = function()
-    local todo_file = io.open(M.todosFilePath, "w")
+    local todo_file = io.open(constants.todosFilePath, "w")
     if todo_file then
         todo_file:write("# TODOS:\n\n## Open:\n")
         for path, title in pairs(state.opened) do
@@ -48,8 +48,8 @@ M.update_todos_md = function()
 end
 
 M.refresh = function()
-    state.opened = utils.get_files(M.todosPath, "todo") or {};
-    state.closed = utils.get_files(M.todosDonePath, "done") or {};
+    state.opened = utils.get_files(constants.todosPath, "todo") or {};
+    state.closed = utils.get_files(constants.todosDonePath, "done") or {};
     M.update_todos_md();
     vim.cmd("e!");
 end
@@ -126,7 +126,7 @@ M.on_file_delete = function(filepath)
 end
 
 M.on_todos_md_updated = function()
-    local file = io.open(M.todosFilePath, "r");
+    local file = io.open(constants.todosFilePath, "r");
     if not file then
         return;
     end
@@ -182,13 +182,13 @@ M.on_todos_md_updated = function()
     end
     for path, _ in pairs(to_remove) do
         local filename = vim.fn.fnamemodify(path, ":t:r");
-        local newLocation = M.todosDeletedPath .. "/" .. filename .. ".md";
+        local newLocation = constants.todosDeletedPath .. "/" .. filename .. ".md";
         local _file = io.open(newLocation, "r");
         if _file then
             _file:close();
             local _filename = filename ..
-                utils.get_next_id(M.todosDeletedPath, filename) .. ".md";
-            newLocation = utils.parse_path_helper(M.todosDeletedPath .. "/" .. _filename):gsub("%./", "");
+                utils.get_next_id(constants.todosDeletedPath, filename) .. ".md";
+            newLocation = utils.parse_path_helper(constants.todosDeletedPath .. "/" .. _filename):gsub("%./", "");
         end
         M.update_dont_open(path, nil, true, newLocation);
     end
@@ -196,8 +196,8 @@ M.on_todos_md_updated = function()
 end
 
 M.open_new_todo = function()
-    local id = utils.get_next_id(M.todosPath, "todo");
-    local path = utils.parse_path_helper(M.todosPath "/todo" .. id .. ".md");
+    local id = utils.get_next_id(constants.todosPath, "todo");
+    local path = utils.parse_path_helper(constants.todosPath "/todo" .. id .. ".md");
     local file = io.open(path, "w");
     if file then
         file:write("!TODO\n\n# ");
@@ -214,7 +214,6 @@ M.set_Path = function()
     save(state)
     M.update_path();
     constants.update_paths();
-    vim.print(vim.inspect(constants));
     M.refresh();
 end
 

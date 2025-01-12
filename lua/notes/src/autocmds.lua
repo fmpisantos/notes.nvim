@@ -1,5 +1,6 @@
 local M = {};
 
+local constants = require("notes.constants");
 local functions = require("notes.src.functions");
 local tags = require("notes.constants").tags;
 local utils = require("notes.src.utils")
@@ -76,7 +77,7 @@ local function add_todo()
     local content = tags.todo .. "\n\n# " .. title;
     title = utils.parse_path(title);
     title = makeCamelCase(title, true);
-    local file = io.open(utils.parse_path_helper(M.todosPath .. "/" .. title .. ".md"), "w");
+    local file = io.open(utils.parse_path_helper(constants.todosPath .. "/" .. title .. ".md"), "w");
     if file then
         file:write(content);
         file:close();
