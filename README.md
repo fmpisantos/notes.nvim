@@ -59,7 +59,7 @@ Allows you to set a path as the notes directory. This can be useful when working
 Opens the main notes directory in a popup window.
 
 4. **`:Todos`**  
-Opens the main todos directory in a popup window.
+Opens the todos.md in a popup window.
 
 5. **`:GotoTodos`**  
 Opens the todos.md file in the current buffer.

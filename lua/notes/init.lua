@@ -17,7 +17,7 @@ function M.setup()
             functions.open(constants.notesPath);
         end, { nargs = 0 });
         vim.api.nvim_create_user_command("Todos", function()
-            functions.open(constants.todosPath);
+            functions.open(constants.todosFilePath);
         end, { nargs = 0 });
         vim.api.nvim_create_user_command("GotoNotes", function()
             vim.cmd("e " .. constants.notesPath);
