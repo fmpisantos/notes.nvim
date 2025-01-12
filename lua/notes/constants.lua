@@ -17,7 +17,7 @@ M.pre = {}
 
 M.update_paths = function()
     if not state then
-        return
+        return false
     end
     M.notesPath = utils.parse_path_helper(state.path .. "/notes");
     M.notes_inc = M.notesPath .. "/**";
@@ -27,6 +27,7 @@ M.update_paths = function()
     M.todosDeletedPath = utils.parse_path_helper(state.path .. "/todos/deleted");
     M.todosFilePath = utils.parse_path_helper(state.path .. "/todos.md");
     require("notes.src.autocmds");
+    return true;
 end
 
 return M;
