@@ -24,7 +24,8 @@ M.update_path = function(path)
     if (save == nil) then
         return
     end
-    path = utils.parse_path_helper(vim.fn.expand('%:p'))
+    path = utils.parse_path_helper(path);
+    vim.print(path);
     state.path = path
     state.opened = {}
     state.closed = {}
