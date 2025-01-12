@@ -182,6 +182,8 @@ M.on_todos_md_updated = function()
         end
     end
     for path, title in pairs(to_update) do
+        vim.print(path)
+        vim.print(title)
         M.update_dont_open(path, title.type, true,
             utils.get_location_from_type(title.type) .. "/" .. vim.fn.fnamemodify(path, ":t"));
     end
