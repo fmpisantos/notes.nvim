@@ -17,7 +17,9 @@ This configuration provides a set of custom user commands and autocommands for m
 
 
 ## Dependencies
-### Oil.nvim (TODO: Remove this dependency)
+### Oil.nvim 
+[!Warning]
+Remove this dependency
 This plugin is used to manage file operations, such as moving files and updating content.
 [!NOTE]
 This plugin is not really necessary, was just used because I was using it at the time, if you want to remove it you can just replace the functions that use it with the default vim functions.
