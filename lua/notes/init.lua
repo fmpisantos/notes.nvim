@@ -14,10 +14,6 @@ function M.setup()
     vim.api.nvim_create_user_command("NotesSetup", functions.create_notes_directory, { nargs = 0 })
     vim.api.nvim_create_user_command("NotesSetPath", functions.set_Path, { nargs = 0 })
 
-    if not functions.is_note_folder() then
-        return
-    end
-
     constants.update_paths();
 
     vim.api.nvim_create_user_command("Notes", function()
@@ -32,17 +28,12 @@ function M.setup()
         functions.open(path);
     end, { nargs = 0 })
     vim.api.nvim_create_user_command("Todo", functions.open_new_todo, { nargs = 0 })
-    vim.api.nvim_create_user_command("NotesRestart", functions.refresh, { nargs = 0 })
-    vim.api.nvim_create_user_command("TodosRestart", functions.refresh, { nargs = 0 })
-    vim.api.nvim_create_user_command("TodosRefresh", functions.refresh, { nargs = 0 })
-    vim.api.nvim_create_user_command("NotesRefresh", functions.refresh, { nargs = 0 })
-    vim.api.nvim_create_user_command("GotoNotes", function()
-        vim.cmd("e " .. constants.notesPath);
-    end, { nargs = 0 })
-    vim.api.nvim_create_user_command("GotoTodos", function()
-        vim.cmd("e " .. constants.todosFilePath);
-    end, { nargs = 0 })
 
+    if not functions.is_note_folder() then
+        return
+    end
+
+    vim.api.nvim_create_user_command("TodosRefresh", functions.refresh, { nargs = 0 })
 
     vim.api.nvim_create_autocmd('BufWritePre', {
         pattern = { constants.notes_inc, constants.todos_inc },
