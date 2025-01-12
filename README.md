@@ -12,6 +12,7 @@ This configuration provides a set of custom user commands and autocommands for m
 - [Marks](#marks)
 - [Functions Overview](#functions-overview)
 - [Additional Configuration](#additional-configuration)
+- [Preview](#preview)
 
 ## Dependencies
 ### Oil.nvim (TODO: Remove this dependency)
@@ -162,3 +163,9 @@ Updates the content in a split window showing a todo file.
 The `oilAutoCMD.setup` function is used to set up additional behavior for files managed by the Oil plugin. Specifically:
 - It handles file deletions, invoking the `on_file_delete` function.
 - It manages file updates, invoking the `update_dont_open` function to update file state after a move operation, and it triggers `update_todos_md` to ensure the todos file is updated correctly.
+
+## Preview
+![Home folder preview](./assets/home_folder.png)
+![todos.md preview](./assets/todos_md.png)
+![Todos folder preview](./assets/todos_folder.png)
+![Example todo file preview](./assets/example_todo.png)
