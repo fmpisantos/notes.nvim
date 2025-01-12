@@ -24,7 +24,7 @@ M.update_path = function(path)
     if (save == nil) then
         return
     end
-    path = M.parse_path(path)
+    path = utils.parse_path(path)
     state.path = path
     state.opened = {}
     state.closed = {}
