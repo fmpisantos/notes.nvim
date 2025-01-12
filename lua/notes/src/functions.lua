@@ -214,6 +214,7 @@ M.set_Path = function()
     save(state)
     M.update_path();
     constants.update_paths();
+    vim.print(vim.inspect(constants));
     M.refresh();
 end
 
