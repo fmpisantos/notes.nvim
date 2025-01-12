@@ -163,7 +163,7 @@ M.on_todos_md_updated = function()
     end
     for path, title in pairs(to_update) do
         M.update_dont_open(path, title.type, true,
-            utils.get_location_from_type(title.type) .. "/" .. vim.fn.expand(path, ":t"));
+            utils.get_location_from_type(title.type) .. "/" .. vim.fn.fnamemodify(path, ":t"));
     end
     for path, _ in pairs(to_remove) do
         local filename = vim.fn.fnamemodify(path, ":t:r");
