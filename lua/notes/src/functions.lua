@@ -233,21 +233,21 @@ M.create_notes_directory = function()
     end
 
     local path = oil.get_current_dir()
-    local notes_path = M.parse_path_helper(path .. "/" .. projectName)
+    local notes_path = utils.parse_path_helper(path .. "/" .. projectName)
 
 
-    M.create_dir(notes_path)
+    utils.create_dir(notes_path)
 
-    M.create_dir(notes_path .. "/notes")
-    M.create_dir(notes_path .. "/todos")
-    M.create_dir(notes_path .. "/todos/done")
-    M.create_dir(notes_path .. "/todos/deleted")
+    utils.create_dir(notes_path .. "/notes")
+    utils.create_dir(notes_path .. "/todos")
+    utils.create_dir(notes_path .. "/todos/done")
+    utils.create_dir(notes_path .. "/todos/deleted")
 
-    io.open(M.parse_path(notes_path .. "/notes/.gitkeep"), "w"):close()
-    io.open(M.parse_path(notes_path .. "/todos/.gitkeep"), "w"):close()
-    io.open(M.parse_path(notes_path .. "/todos/done/.gitkeep"), "w"):close()
+    io.open(utils.parse_path(notes_path .. "/notes/.gitkeep"), "w"):close()
+    io.open(utils.parse_path(notes_path .. "/todos/.gitkeep"), "w"):close()
+    io.open(utils.parse_path(notes_path .. "/todos/done/.gitkeep"), "w"):close()
 
-    local todo_file = io.open(M.parse_path(notes_path .. "/todos.md"), "w")
+    local todo_file = io.open(utils.parse_path(notes_path .. "/todos.md"), "w")
     if todo_file then
         todo_file:write("# TODOS:\n\n## Open:\n\n## Closed:")
         todo_file:close()
