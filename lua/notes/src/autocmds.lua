@@ -88,12 +88,12 @@ local function add_todo()
 end
 
 vim.api.nvim_create_autocmd('CursorMoved', {
-    pattern = { M.todosFilePath },
+    pattern = { constants.todosFilePath },
     callback = update_split_content,
 });
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { M.todosFilePath },
+    pattern = { constants.todosFilePath },
     callback = function()
         nmap('gf', goto_file_in_todos_md, { noremap = true, silent = true });
         nmap('gd', goto_file_in_todos_md, { noremap = true, silent = true });
@@ -156,5 +156,5 @@ oilAutoCMD.setup(
         functions.update_dont_open(src, functions.type_of_file_location(dest), true, dest)
         functions.update_todos_md()
     end,
-    { M.notes_inc, M.todos_inc }
+    { constants.notes_inc, constants.todos_inc }
 );

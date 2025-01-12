@@ -13,7 +13,6 @@ function M.setup()
     vim.api.nvim_create_user_command("NotesSetPath", functions.set_Path, { nargs = 0 })
 
     constants.update_paths();
-    require("notes.src.autocmds");
 
     vim.api.nvim_create_user_command("Notes", function()
         functions.open(constants.notesPath);

@@ -26,6 +26,7 @@ M.update_paths = function()
     M.todosDonePath = utils.parse_path_helper(state.path .. "/todos/done");
     M.todosDeletedPath = utils.parse_path_helper(state.path .. "/todos/deleted");
     M.todosFilePath = utils.parse_path_helper(state.path .. "/todos.md");
+    require("notes.src.autocmds");
 end
 
 return M;
