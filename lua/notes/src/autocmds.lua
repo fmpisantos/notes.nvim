@@ -75,9 +75,9 @@ local function add_todo()
         return
     end
     local content = tags.todo .. "\n\n# " .. title;
-    title = utils.parse_path(title);
-    title = makeCamelCase(title, true);
-    local file = io.open(utils.parse_path_helper(constants.todosPath .. "/" .. title .. ".md"), "w");
+    local filePath = utils.parse_path(title);
+    filePath  = makeCamelCase(title, true);
+    local file = io.open(utils.parse_path_helper(constants.todosPath .. "/" .. filePath .. ".md"), "w");
     if file then
         file:write(content);
         file:close();
