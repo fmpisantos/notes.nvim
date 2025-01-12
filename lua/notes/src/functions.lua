@@ -96,7 +96,9 @@ M.update = function(_oldPath, newType, dont_update_todos_md, newPath, dontOpenBu
     else
         utils.update_first_line(_oldPath, newType);
     end
-    newPath = newPath or utils.get_location_from_type(newType) .. "/" .. vim.fn.fnamemodify(_oldPath, ":t");
+    vim.print(newPath)
+    newPath = newPath or utils.get_location_from_type(newType) .. "/" .. vim.fn.fnamemodify(_oldPath, "%:t");
+    vim.print(newPath)
 
     local title = utils.get_title(_oldPath) or newPath;
     if newType ~= oldType then
