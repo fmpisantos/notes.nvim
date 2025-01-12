@@ -4,7 +4,7 @@ This configuration provides a set of custom user commands and autocommands for m
 
 ## Table of Contents
 
-- [Requirements / Dependencies](#requirements)
+- [Dependencies](#dependencies)
 - [Setup](#setup)
 - [User Commands](#user-commands)
 - [Autocommands](#autocommands)
@@ -13,7 +13,7 @@ This configuration provides a set of custom user commands and autocommands for m
 - [Functions Overview](#functions-overview)
 - [Additional Configuration](#additional-configuration)
 
-## Requirements / Dependencies
+## Dependencies
 ### Oil.nvim (TODO: Remove this dependency)
 This plugin is used to manage file operations, such as moving files and updating content.
 [!NOTE]
@@ -49,7 +49,7 @@ These are custom commands that can be invoked by the user within Neovim:
 1. **`:NotesSetup`**  
 Initializes a new notes directory creating the necessary files and folders.
 
-2. **`:NotesSetPath`**  
+2. **`:NotesSetPath <a name="notessetpath"></a>`**
 Allows you to set a path as the notes directory. This can be useful when working with multiple notes directories or to transfer between devices.
 
 3. **`:Notes`**  
