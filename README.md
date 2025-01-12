@@ -49,8 +49,8 @@ These are custom commands that can be invoked by the user within Neovim:
 1. **`:NotesSetup`**  
 Initializes a new notes directory creating the necessary files and folders.
 
-2. **`:NotesSetPath`**
-Allows you to set a path as the notes directory. This can be useful when working with multiple notes directories or to transfer between devices. <a name="notessetpath"></a>
+2. **`:NotesSetPath`** <a name="notessetpath"></a> </br>
+Allows you to set a path as the notes directory. This can be useful when working with multiple notes directories or to transfer between devices. 
 
 3. **`:Notes`**  
 Opens the main notes directory.
