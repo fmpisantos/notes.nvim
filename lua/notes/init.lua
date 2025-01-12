@@ -1,10 +1,10 @@
 local M = {}
 
 local pre = require("notes.constants").pre;
-local utils = require("notes.src.utils");
 local state = require("notes.src.state").state;
 local functions = require("notes.src.functions");
 local constants = require("notes.constants");
+require("notes.src.autocmds");
 
 if state == nil then
     return

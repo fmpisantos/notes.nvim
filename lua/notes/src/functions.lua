@@ -197,7 +197,7 @@ end
 
 M.open_new_todo = function()
     local id = utils.get_next_id(constants.todosPath, "todo");
-    local path = utils.parse_path_helper(constants.todosPath "/todo" .. id .. ".md");
+    local path = utils.parse_path_helper(constants.todosPath .. "/todo" .. id .. ".md");
     local file = io.open(path, "w");
     if file then
         file:write("!TODO\n\n# ");
