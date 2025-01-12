@@ -166,6 +166,6 @@ The `oilAutoCMD.setup` function is used to set up additional behavior for files 
 
 ## Preview
 ![Home folder preview](./assets/home_folder.png)
-![todos.md preview](./assets/todos_md.png)
+![todos.md preview](./assets/example_todos_md.png)
 ![Todos folder preview](./assets/todos_folder.png)
 ![Example todo file preview](./assets/example_todo.png)
