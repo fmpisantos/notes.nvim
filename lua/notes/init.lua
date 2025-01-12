@@ -10,6 +10,13 @@ if state == nil then
 end
 
 function M.setup()
+    vim.api.nvim_create_user_command("NotesSetup", functions.create_notes_directory, { nargs = 0 })
+    vim.api.nvim_create_user_command("NotesSetPath", functions.set_Path, { nargs = 0 })
+
+    if not functions.is_note_folder() then
+        return
+    end
+
     M.notesPath = utils.parse_path_helper(state.path .. "/notes");
     M.notes_inc = M.notesPath .. "/**";
     M.todosPath = utils.parse_path_helper(state.path .. "/todos");
@@ -18,7 +25,6 @@ function M.setup()
     M.todosDeletedPath = utils.parse_path_helper(state.path .. "/todos/deleted");
     M.todosFilePath = utils.parse_path_helper(state.path .. "/todos.md");
 
-    vim.api.nvim_create_user_command("NotesSetup", functions.create_notes_directory, { nargs = 0 })
     vim.api.nvim_create_user_command("Notes", function()
         functions.open(M.notesPath);
     end, { nargs = 0 })
@@ -31,21 +37,17 @@ function M.setup()
         functions.open(path);
     end, { nargs = 0 })
     vim.api.nvim_create_user_command("Todo", functions.open_new_todo, { nargs = 0 })
+    vim.api.nvim_create_user_command("NotesRestart", functions.refresh, { nargs = 0 })
+    vim.api.nvim_create_user_command("TodosRestart", functions.refresh, { nargs = 0 })
+    vim.api.nvim_create_user_command("TodosRefresh", functions.refresh, { nargs = 0 })
+    vim.api.nvim_create_user_command("NotesRefresh", functions.refresh, { nargs = 0 })
     vim.api.nvim_create_user_command("GotoNotes", function()
         vim.cmd("e " .. M.notesPath);
     end, { nargs = 0 })
     vim.api.nvim_create_user_command("GotoTodos", function()
         vim.cmd("e " .. M.todosFilePath);
     end, { nargs = 0 })
-    vim.api.nvim_create_user_command("NotesRestart", functions.refresh, { nargs = 0 })
-    vim.api.nvim_create_user_command("TodosRestart", functions.refresh, { nargs = 0 })
-    vim.api.nvim_create_user_command("TodosRefresh", functions.refresh, { nargs = 0 })
-    vim.api.nvim_create_user_command("NotesRefresh", functions.refresh, { nargs = 0 })
-    vim.api.nvim_create_user_command("NotesSetPath", functions.set_Path, { nargs = 0 })
 
-    if not functions.is_note_folder() then
-        return
-    end
 
     vim.api.nvim_create_autocmd('BufWritePre', {
         pattern = { M.notes_inc, M.todos_inc },
