@@ -20,10 +20,10 @@ function M.setup()
             functions.open(constants.todosPath);
         end, { nargs = 0 });
         vim.api.nvim_create_user_command("GotoNotes", function()
-            vim.cmd("e " .. M.notesPath);
+            vim.cmd("e " .. constants.notesPath);
         end, { nargs = 0 });
         vim.api.nvim_create_user_command("GotoTodos", function()
-            vim.cmd("e " .. M.todosFilePath);
+            vim.cmd("e " .. constants.todosFilePath);
         end, { nargs = 0 });
         vim.api.nvim_create_user_command("Note", function()
             local id = functions.get_next_id(constants.notesPath, "note");
