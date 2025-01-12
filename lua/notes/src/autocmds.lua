@@ -15,7 +15,7 @@ end
 local function goto_file_in_todos_md()
     local path = get_current_line_path();
     if path then
-        functions.open(path);
+        functions.open(utils.make_full_path(path));
     end
 end
 
