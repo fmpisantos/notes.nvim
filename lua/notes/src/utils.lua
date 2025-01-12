@@ -86,7 +86,7 @@ M.open_floating_window = function()
         vim.api.nvim_win_hide(floating_window.win)
         return
     end
-    floating_window = CreateFloatingWindow { buf = floating_window.buf, keepStyle = true };
+    floating_window = M.CreateFloatingWindow { buf = floating_window.buf, keepStyle = true };
 end
 
 M.get_location_from_type = function(type)
