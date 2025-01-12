@@ -74,10 +74,10 @@ local function add_todo()
     if title == nil or title == "" then
         return
     end
-    local content = tags.todo .. "\n\n# " .. title;
+    local content  = tags.todo .. "\n\n# " .. title;
     local filePath = utils.parse_path(title);
-    filePath  = makeCamelCase(title, true);
-    local file = io.open(utils.parse_path_helper(constants.todosPath .. "/" .. filePath .. ".md"), "w");
+    filePath       = makeCamelCase(title, true);
+    local file     = io.open(utils.parse_path_helper(constants.todosPath .. "/" .. filePath .. ".md"), "w");
     if file then
         file:write(content);
         file:close();
@@ -99,6 +99,52 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         nmap('gd', goto_file_in_todos_md, { noremap = true, silent = true });
         nmap('<Tab>', split_current_file, { noremap = true, silent = true });
         nmap('<leader>n', add_todo, { noremap = true, silent = true });
+    end,
+});
+
+if not functions.is_note_folder() then
+    return
+end
+
+vim.api.nvim_create_user_command("TodosRefresh", functions.refresh, { nargs = 0 })
+
+vim.api.nvim_create_autocmd('BufWritePre', {
+    pattern = { constants.notes_inc, constants.todos_inc },
+    callback = function()
+        local current_path = vim.fn.expand('%:p');
+        if constants.pre[current_path] then
+            return
+        end
+        constants.pre[current_path] = vim.fn.filereadable(current_path) == 0
+    end,
+});
+
+vim.api.nvim_create_autocmd('BufWritePost', {
+    pattern = { constants.notes_inc, constants.todos_inc },
+    callback = function()
+        local current_path = vim.fn.expand('%:p');
+        if constants.pre[current_path] then
+            functions.new_file(current_path);
+        else
+            functions.update();
+        end
+        constants.pre[current_path] = false;
+    end,
+});
+
+vim.api.nvim_create_autocmd('BufWritePost', {
+    pattern = { constants.todosFilePath },
+    callback = function()
+        functions.on_todos_md_updated()
+        vim.cmd("e " .. constants.todosFilePath);
+    end,
+});
+
+vim.api.nvim_create_autocmd('BufDelete', {
+    pattern = { constants.notes_inc, constants.todos_inc },
+    callback = function(event)
+        local filepath = vim.api.nvim_buf_get_name(event.buf)
+        functions.on_file_delete(filepath)
     end,
 });
 

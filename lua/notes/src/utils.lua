@@ -184,9 +184,7 @@ end
 
 M.is_in_path_dir = function(base_path)
     local current_dir = M.parse_path_helper((oil.get_current_dir() or vim.fn.expand('%:p:h')) .. "/");
-    vim.print("Current dir: ", current_dir);
     base_path = M.parse_path_helper(base_path);
-    vim.print("Base path: ", base_path);
     if not current_dir or current_dir == "" then
         return false;
     end
