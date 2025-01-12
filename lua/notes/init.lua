@@ -1,10 +1,8 @@
 local M = {}
 
-local pre = require("notes.constants").pre;
 local state = require("notes.src.state").state;
 local functions = require("notes.src.functions");
 local constants = require("notes.constants");
-require("notes.src.autocmds");
 
 if state == nil then
     return
@@ -15,6 +13,7 @@ function M.setup()
     vim.api.nvim_create_user_command("NotesSetPath", functions.set_Path, { nargs = 0 })
 
     constants.update_paths();
+    require("notes.src.autocmds");
 
     vim.api.nvim_create_user_command("Notes", function()
         functions.open(constants.notesPath);

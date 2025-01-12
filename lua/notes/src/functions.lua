@@ -10,6 +10,16 @@ if not state then
     return
 end
 
+M.get_location_from_type = function(type)
+    if type == "todo" then
+        return constants.todosPath;
+    else
+        if type == "done" then
+            return constants.todosDonePath;
+        end
+    end
+    return constants.notesPath
+end
 
 M.open = function(path)
     utils.open_floating_window();
@@ -25,7 +35,6 @@ M.update_path = function(path)
         return
     end
     path = utils.parse_path_helper(path);
-    vim.print(path);
     state.path = path
     state.opened = {}
     state.closed = {}
@@ -82,11 +91,6 @@ M.update = function(_oldPath, newType, dont_update_todos_md, newPath, dontOpenBu
     end
     local oldType = utils.type_of_file_location(_oldPath);
 
-    vim.print("Old type: " .. oldType);
-    vim.print("New type: " .. tostring(newType));
-    vim.print("Old path: " .. tostring(_oldPath));
-    vim.print("New path: " .. tostring(newPath));
-
     if not newType then
         local todo, done = utils.get_todo_info();
         if todo then
@@ -101,7 +105,7 @@ M.update = function(_oldPath, newType, dont_update_todos_md, newPath, dontOpenBu
     else
         utils.update_first_line(_oldPath, newType);
     end
-    newPath = newPath or utils.get_location_from_type(newType) .. "/" .. vim.fn.fnamemodify(_oldPath, "%:t");
+    newPath = newPath or M.get_location_from_type(newType) .. "/" .. vim.fn.fnamemodify(_oldPath, ":t");
 
     local title = utils.get_title(_oldPath) or newPath;
     if newType ~= oldType then
@@ -182,10 +186,8 @@ M.on_todos_md_updated = function()
         end
     end
     for path, title in pairs(to_update) do
-        vim.print(path)
-        vim.print(title)
         M.update_dont_open(path, title.type, true,
-            utils.get_location_from_type(title.type) .. "/" .. vim.fn.fnamemodify(path, ":t"));
+            M.get_location_from_type(title.type) .. "/" .. vim.fn.fnamemodify(path, ":t"):gsub("%./", ""));
     end
     for path, _ in pairs(to_remove) do
         local filename = vim.fn.fnamemodify(path, ":t:r");

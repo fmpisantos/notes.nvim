@@ -122,7 +122,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 vim.api.nvim_create_autocmd('BufWritePost', {
     pattern = { constants.notes_inc, constants.todos_inc },
     callback = function()
-        vim.print("BufWritePost");
         local current_path = vim.fn.expand('%:p');
         if constants.pre[current_path] then
             functions.new_file(current_path);

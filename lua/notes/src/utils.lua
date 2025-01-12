@@ -88,17 +88,6 @@ M.open_floating_window = function()
     floating_window = M.CreateFloatingWindow { buf = floating_window.buf, keepStyle = true };
 end
 
-M.get_location_from_type = function(type)
-    if type == "todo" then
-        return M.todosPath;
-    else
-        if type == "done" then
-            return M.todosDonePath;
-        end
-    end
-    return M.notesPath
-end
-
 M.deserialize_todos_md_line = function(line)
     local checkbox = line:match("%- %[(%S)%]") == "x";
     local title = line:match("%[(.-)%]");
@@ -114,6 +103,7 @@ M.move_file = function(source, destination, dontOpenBuffer)
     destination = M.make_full_path(destination)
     local success, err = os.rename(source, destination)
     if not success then
+        vim.print(source, destination)
         vim.print("Error moving file:", err)
         return
     end
