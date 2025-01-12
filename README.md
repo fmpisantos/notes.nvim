@@ -18,10 +18,8 @@ This configuration provides a set of custom user commands and autocommands for m
 
 ## Dependencies
 ### Oil.nvim 
-[!Warning]
-Remove this dependency
-This plugin is used to manage file operations, such as moving files and updating content.
-[!NOTE]
+This plugin is used to manage file operations, such as moving files and updating content. </br>
+![Warning](https://img.shields.io/badge/Warning-yellow?style=flat-square)  
 This plugin is not really necessary, was just used because I was using it at the time, if you want to remove it you can just replace the functions that use it with the default vim functions.
 
 #### OilAutoCmd.nvim
@@ -79,7 +77,7 @@ Opens a new todo file, allowing you to create and track tasks. Prefixing the new
 Regenerates the todos.md file based on the files locations.
 
 ## Autocommands
-[!TIP]
+![Tip](https://img.shields.io/badge/Tip-green?style=flat-square)  
 The following autocommands are only setup for files in the [notes directory](#notessetpath):
 
 1. **`BufWritePre`**  
