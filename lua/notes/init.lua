@@ -32,10 +32,6 @@ function M.setup()
         end, { nargs = 0 });
         vim.api.nvim_create_user_command("Todo", functions.open_new_todo, { nargs = 0 });
 
-        if not functions.is_note_folder() then
-            return
-        end
-
         vim.api.nvim_create_user_command("TodosRefresh", functions.refresh, { nargs = 0 })
     end
 end
