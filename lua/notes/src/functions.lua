@@ -245,6 +245,7 @@ M.create_notes_directory = function()
 
     io.open(utils.parse_path(notes_path .. "/notes/.gitkeep"), "w"):close()
     io.open(utils.parse_path(notes_path .. "/todos/.gitkeep"), "w"):close()
+    io.open(utils.parse_path(notes_path .. "/todos/deleted/.gitkeep"), "w"):close()
     io.open(utils.parse_path(notes_path .. "/todos/done/.gitkeep"), "w"):close()
 
     local todo_file = io.open(utils.parse_path(notes_path .. "/todos.md"), "w")
