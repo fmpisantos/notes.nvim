@@ -16,7 +16,7 @@ M.tags = {
 M.pre = {}
 
 M.update_paths = function()
-    if not state then
+    if not state or not state.path then
         return false
     end
     M.notesPath = utils.parse_path_helper(state.path .. "/notes");
