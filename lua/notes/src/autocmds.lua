@@ -93,6 +93,7 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { constants.todosFilePath },
     callback = function()
+        functions.refresh();
         nmap('<CR>', goto_file_in_todos_md, { noremap = true, silent = true });
         nmap('gf', goto_file_in_todos_md, { noremap = true, silent = true });
         nmap('gd', goto_file_in_todos_md, { noremap = true, silent = true });
