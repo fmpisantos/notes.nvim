@@ -269,7 +269,6 @@ end
 
 M.get_files = function(directory, filetype)
     directory = M.parse_path(directory);
-    vim.print("Directory: " .. directory);
     local uv = vim.loop
     local handle = uv.fs_opendir(directory)
     if not handle then
