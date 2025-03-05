@@ -110,7 +110,7 @@ vim.api.nvim_create_user_command("TodosRefresh", functions.refresh, { nargs = 0 
 vim.api.nvim_create_autocmd('BufWritePre', {
     pattern = { constants.notes_inc, constants.todos_inc },
     callback = function()
-        vim.pritn("BufWritePre");
+        vim.print("BufWritePre");
         local current_path = vim.fn.expand('%:p');
         if constants.pre[current_path] then
             return
@@ -122,7 +122,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 vim.api.nvim_create_autocmd('BufWritePost', {
     pattern = { constants.notes_inc, constants.todos_inc },
     callback = function()
-        vim.pritn("BufWritePost");
+        vim.print("BufWritePost");
         local current_path = vim.fn.expand('%:p');
         if constants.pre[current_path] then
             functions.new_file(current_path);
@@ -136,7 +136,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 vim.api.nvim_create_autocmd('BufWritePost', {
     pattern = { constants.todosFilePath },
     callback = function()
-        vim.pritn("BufWritePost");
+        vim.print("BufWritePost");
         functions.on_todos_md_updated()
         vim.cmd("e " .. constants.todosFilePath);
     end,
@@ -145,7 +145,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 vim.api.nvim_create_autocmd('BufDelete', {
     pattern = { constants.notes_inc, constants.todos_inc },
     callback = function(event)
-        vim.pritn("BufDelete");
+        vim.print("BufDelete");
         local filepath = vim.api.nvim_buf_get_name(event.buf)
         functions.on_file_delete(filepath)
     end,
