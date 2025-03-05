@@ -30,9 +30,9 @@ M.parse_path = function(path)
         return path;
     end
     path = M.parse_path_helper(path);
-    if state.path then
-        path = string.gsub(path, state.path, "./");
-    end
+    -- if state.path then
+    --     path = string.gsub(path, state.path, "./");
+    -- end
     return path;
 end
 
@@ -269,6 +269,7 @@ end
 
 M.get_files = function(directory, filetype)
     directory = M.parse_path(directory);
+    vim.print("Directory: " .. directory);
     local uv = vim.loop
     local handle = uv.fs_opendir(directory)
     if not handle then
