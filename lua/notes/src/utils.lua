@@ -341,6 +341,9 @@ M.CreateFloatingWindow = function(opts)
             scratch = false
         end
         buf = vim.api.nvim_create_buf(false, scratch)
+        if opts and opts.name then
+            vim.api.nvim_buf_set_name(buf, opts.name)
+        end
     end
 
     local win_opts = {

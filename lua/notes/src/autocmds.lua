@@ -93,6 +93,7 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { constants.todosFilePath },
     callback = function()
+        -- TODO: Remove this refresh or do it in a synchronous way so that the user can still use the editor
         functions.refresh();
         nmap('<CR>', goto_file_in_todos_md, { noremap = true, silent = true });
         nmap('gf', goto_file_in_todos_md, { noremap = true, silent = true });
@@ -111,7 +112,6 @@ vim.api.nvim_create_user_command("TodosRefresh", functions.refresh, { nargs = 0 
 vim.api.nvim_create_autocmd('BufWritePre', {
     pattern = { constants.notes_inc, constants.todos_inc },
     callback = function()
-        vim.print("BufWritePre");
         local current_path = vim.fn.expand('%:p');
         if constants.pre[current_path] then
             return
@@ -123,7 +123,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 vim.api.nvim_create_autocmd('BufWritePost', {
     pattern = { constants.notes_inc, constants.todos_inc },
     callback = function()
-        vim.print("BufWritePost");
         local current_path = vim.fn.expand('%:p');
         if constants.pre[current_path] then
             functions.new_file(current_path);
@@ -137,7 +136,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 vim.api.nvim_create_autocmd('BufWritePost', {
     pattern = { constants.todosFilePath },
     callback = function()
-        vim.print("BufWritePost");
         functions.on_todos_md_updated()
         vim.cmd("e " .. constants.todosFilePath);
     end,
@@ -146,7 +144,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 vim.api.nvim_create_autocmd('BufDelete', {
     pattern = { constants.notes_inc, constants.todos_inc },
     callback = function(event)
-        vim.print("BufDelete");
         local filepath = vim.api.nvim_buf_get_name(event.buf)
         functions.on_file_delete(filepath)
     end,
