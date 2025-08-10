@@ -2,8 +2,8 @@ local M = {};
 
 local oil = require("oil")
 
-if not oil.adapters then
-  oil.setup()
+if package.loaded['oil'] == nil then
+    oil.setup()
 end
 
 local oilAutoCMD = require("oilAutoCmd.init");

@@ -4,7 +4,7 @@ local constants = require("notes.constants");
 local utils = require("notes.src.utils");
 local oil = require("oil")
 
-if not oil.adapters then
+if package.loaded['oil'] == nil then
   oil.setup()
 end
 local _state = require("notes.src.state");

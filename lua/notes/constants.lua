@@ -7,7 +7,7 @@ end
 local utils = require("notes.src.utils")
 local oil = require("oil")
 
-if not oil.adapters then
+if package.loaded['oil'] == nil then
   oil.setup()
 end
 
