@@ -1,11 +1,10 @@
 local M = {};
 
-M.oil = require("oil")
+local oil = require("oil")
 
-if not M.oil.adapters then
-  M.oil.setup()
+if not oil.adapters then
+  oil.setup()
 end
-
 
 local oilAutoCMD = require("oilAutoCmd.init");
 local _state = require("notes.src.state");

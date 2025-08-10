@@ -5,7 +5,12 @@ if M.tags then
 end
 
 local utils = require("notes.src.utils")
-local oil = utils.oil
+local oil = require("oil")
+
+if not oil.adapters then
+  oil.setup()
+end
+
 local _state = require("notes.src.state")
 local state = _state.state
 

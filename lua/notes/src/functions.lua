@@ -2,7 +2,11 @@ local M = {}
 
 local constants = require("notes.constants");
 local utils = require("notes.src.utils");
-local oil = utils.oil
+local oil = require("oil")
+
+if not oil.adapters then
+  oil.setup()
+end
 local _state = require("notes.src.state");
 local state, save = _state.state, _state.save;
 
