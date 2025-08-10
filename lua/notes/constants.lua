@@ -30,4 +30,11 @@ M.update_paths = function()
     return true;
 end
 
+M.oil = require("oil")
+
+if not M.oil.adapters then
+  M.oil.setup()
+end
+
+
 return M;

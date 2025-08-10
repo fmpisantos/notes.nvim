@@ -1,6 +1,7 @@
 local M = {};
 
-local oil = require("oil");
+local constants = require("notes.constants");
+local oil = constants.oil
 local oilAutoCMD = require("oilAutoCmd.init");
 local _state = require("notes.src.state");
 local state, save = _state.state, _state.save;
