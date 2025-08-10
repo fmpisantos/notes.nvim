@@ -4,6 +4,12 @@ if M.tags then
     return M
 end
 
+M.oil = require("oil")
+
+if not M.oil.adapters then
+  M.oil.setup()
+end
+
 local utils = require("notes.src.utils")
 local _state = require("notes.src.state")
 local state = _state.state
@@ -29,12 +35,5 @@ M.update_paths = function()
     require("notes.src.autocmds");
     return true;
 end
-
-M.oil = require("oil")
-
-if not M.oil.adapters then
-  M.oil.setup()
-end
-
 
 return M;
