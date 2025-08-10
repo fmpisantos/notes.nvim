@@ -4,13 +4,8 @@ if M.tags then
     return M
 end
 
-M.oil = require("oil")
-
-if not M.oil.adapters then
-  M.oil.setup()
-end
-
 local utils = require("notes.src.utils")
+local oil = utils.oil
 local _state = require("notes.src.state")
 local state = _state.state
 

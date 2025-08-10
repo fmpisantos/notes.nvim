@@ -1,8 +1,8 @@
 local M = {}
 
 local constants = require("notes.constants");
-local oil = constants.oil
 local utils = require("notes.src.utils");
+local oil = utils.oil
 local _state = require("notes.src.state");
 local state, save = _state.state, _state.save;
 
