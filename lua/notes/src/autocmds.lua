@@ -2,7 +2,9 @@ local constants = require("notes.constants");
 local functions = require("notes.src.functions");
 local tags = require("notes.constants").tags;
 local utils = require("notes.src.utils")
-local oilAutoCMD = require("oilAutoCmd.init");
+-- OilAutoCMD is optional, provide fallback
+local oilAutoCMD = nil
+local has_oilAutoCMD = pcall(function() oilAutoCMD = require("oilAutoCmd.init") end)
 
 local function get_current_line_path()
     local line = vim.fn.getline('.');
@@ -149,20 +151,22 @@ vim.api.nvim_create_autocmd('BufDelete', {
     end,
 });
 
-oilAutoCMD.setup(
-    {
-        func = function(path)
-            functions.on_file_delete(path)
-        end,
-        pattern = { constants.todos_inc }
-    },
-    {
-        func = function(src, dest)
-            functions.update_file_move(src, utils.type_of_file_location(dest))
-        end,
-        pattern = { constants.notes_inc, constants.todos_inc },
-        on_end = function()
-            functions.update_todos_md()
-        end
-    }
-);
+if has_oilAutoCMD then
+    oilAutoCMD.setup(
+        {
+            func = function(path)
+                functions.on_file_delete(path)
+            end,
+            pattern = { constants.todos_inc }
+        },
+        {
+            func = function(src, dest)
+                functions.update_file_move(src, utils.type_of_file_location(dest))
+            end,
+            pattern = { constants.notes_inc, constants.todos_inc },
+            on_end = function()
+                functions.update_todos_md()
+            end
+        }
+    );
+end

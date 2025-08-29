@@ -17,16 +17,17 @@ This configuration provides a set of custom user commands and autocommands for m
 
 
 ## Dependencies
-### Oil.nvim 
-This plugin is used to manage file operations, such as moving files and updating content. </br>
-![Warning](https://img.shields.io/badge/Warning-yellow?style=flat-square)  
-This plugin is not really necessary, was just used because I was using it at the time, if you want to remove it you can just replace the functions that use it with the default vim functions.
 
-#### OilAutoCmd.nvim
-This plugin is used to manage autocommands for files managed by the Oil plugin.
-
+### Required
 ### Shared_Buffer.nvim
 This plugin is used to share a buffer between multiple nvim sessions. (File based)
+
+### Optional
+### Oil.nvim (Optional)
+This plugin enhances file operations and directory browsing. If not installed, the plugin will fall back to using netrw for basic file operations.
+
+#### OilAutoCmd.nvim (Optional)
+This plugin provides additional autocommands for files managed by the Oil plugin. If not installed, some advanced file operation features will be disabled.
 
 ## Setup
 ### Lazy:
@@ -35,9 +36,10 @@ This plugin is used to share a buffer between multiple nvim sessions. (File base
 return {
     "fmpisantos/notes.nvim",
     dependencies = {
-        "stevearc/oil.nvim",
         "fmpisantos/shared_buffer.nvim",
-        "fmpisantos/oilAutoCmd.nvim"
+        -- Optional dependencies (uncomment if you want enhanced features)
+        -- "stevearc/oil.nvim",
+        -- "fmpisantos/oilAutoCmd.nvim"
     },
     config = function()
         require("notes").setup();

@@ -2,9 +2,11 @@ local M = {}
 
 local constants = require("notes.constants");
 local utils = require("notes.src.utils");
-local oil = require("oil")
 
-if package.loaded['oil'] == nil then
+-- Oil is optional, use netrw as fallback
+local oil = nil
+local has_oil = pcall(function() oil = require("oil") end)
+if has_oil and package.loaded['oil'] == nil then
   oil.setup()
 end
 local _state = require("notes.src.state");
@@ -260,7 +262,7 @@ M.create_notes_directory = function()
         return
     end
 
-    local path = oil.get_current_dir()
+    local path = has_oil and oil.get_current_dir() or vim.fn.getcwd()
     local notes_path = utils.parse_path_helper(path .. "/" .. projectName)
 
 
@@ -283,7 +285,11 @@ M.create_notes_directory = function()
     end
 
     vim.cmd(":edit!");
-    oil.open(projectName);
+    if has_oil then
+        oil.open(projectName);
+    else
+        vim.cmd("Explore " .. projectName);
+    end
     vim.cmd(":edit!");
     M.update_path(notes_path);
     constants.update_paths();

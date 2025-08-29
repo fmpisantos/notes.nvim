@@ -1,12 +1,15 @@
 local M = {};
 
-local oil = require("oil")
-
-if package.loaded['oil'] == nil then
+-- Oil is optional, use netrw as fallback
+local oil = nil
+local has_oil = pcall(function() oil = require("oil") end)
+if has_oil and package.loaded['oil'] == nil then
     oil.setup()
 end
 
-local oilAutoCMD = require("oilAutoCmd.init");
+-- OilAutoCMD is optional, provide fallback
+local oilAutoCMD = nil
+local has_oilAutoCMD = pcall(function() oilAutoCMD = require("oilAutoCmd.init") end)
 local _state = require("notes.src.state");
 local state, save = _state.state, _state.save;
 
@@ -23,7 +26,9 @@ M.parse_path_helper = function(path)
     if path == nil then
         return path;
     end
-    path = oilAutoCMD.get_actual_path(path);
+    if has_oilAutoCMD then
+        path = oilAutoCMD.get_actual_path(path);
+    end
     path = string.gsub(path, "\\", "/");
     path = string.gsub(path, "//", "/");
     return path;
@@ -177,7 +182,7 @@ M.starts_with = function(str, prefix)
 end
 
 M.is_in_path_dir = function(base_path)
-    local current_dir = M.parse_path_helper((oil.get_current_dir() or vim.fn.expand('%:p:h')) .. "/");
+    local current_dir = M.parse_path_helper((has_oil and oil.get_current_dir() or vim.fn.expand('%:p:h')) .. "/");
     base_path = M.parse_path_helper(base_path);
     if not current_dir or current_dir == "" then
         return false;

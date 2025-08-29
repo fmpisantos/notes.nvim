@@ -5,9 +5,11 @@ if M.tags then
 end
 
 local utils = require("notes.src.utils")
-local oil = require("oil")
 
-if package.loaded['oil'] == nil then
+-- Oil is optional, use netrw as fallback
+local oil = nil
+local has_oil = pcall(function() oil = require("oil") end)
+if has_oil and package.loaded['oil'] == nil then
   oil.setup()
 end
 
